@@ -15,7 +15,7 @@ add_list_null(l, elm)
 A list, exactly as inputted, but in which \code{NULL} elements have been replaced by \code{list(NULL)}.
 }
 \description{
-This function adds \code{list(NULL)} to a list at all the elements in a user-supplied vector that are \code{NULL}. This is used in \code{Tools4DTS::plot_ts()}.
+This function adds \code{list(NULL)} to a list at all the elements in a user-supplied vector that are \code{NULL}.
 }
 \examples{
 
