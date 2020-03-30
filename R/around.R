@@ -26,6 +26,9 @@
 #' #### Example (3): Multiple positions returned as a dataframe
 #' around(dat, c(10, 30, 39), 3, "data.frame")
 #'
+#' #### Example (4): The function accounts for position at the start/end of the dataframe
+#' around(dat, c(1, 10, nrow(dat)), 3)
+#'
 #'
 #' @author Edward Lavender
 #' @export
@@ -44,13 +47,16 @@ around <-
     # This is helpful if the user inputs a function for position,
     # ... and hasn't check what position that is!
     if(verbose){
-      msg <- paste("Returning dataframe at position", position, "+/-", n, "positions...\'n")
+      msg <- paste("Returning dataframe at position", position, "+/-", n, "positions...\n")
       # Print the message:
-      print(msg)
+      cat(msg)
     }
     # Define dataframe
+    rows <- 1:nrow(dataframe)
     dls <- lapply(position, function(i){
-      d <- dataframe[(i-n):(i+n), ]
+      sel <- (i-n):(i+n)
+      sel <- sel[which(sel %in% rows)]
+      d <- dataframe[sel, ]
       return(d)
     })
     # Return format

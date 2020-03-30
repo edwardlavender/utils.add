@@ -40,6 +40,9 @@ around(dat, c(10, 30, 39), 3, "list")
 #### Example (3): Multiple positions returned as a dataframe
 around(dat, c(10, 30, 39), 3, "data.frame")
 
+#### Example (4): The function accounts for position at the start/end of the dataframe
+around(dat, c(1, 10, nrow(dat)), 3)
+
 
 }
 \author{
