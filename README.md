@@ -34,14 +34,16 @@ install.packages("utils.add")
 
 ``` r
 # Or, install the development version from github:
-# ... 
+devtools::install_github("edwardlavender/utils.add")
 ```
 
 ## Extract data
 
 Some functions facilitate data extraction. These include:
 
+  - `%ni%` – The opposite of `%in%`
   - `isnt_na()` – Extract observations which are not NA
+  - `substr_end()` – Extract the last n letters from a character
   - `around()` – Extract the rows in a dataframe around specified
     position(s)
   - `match_closest()` – Extract the values in one dataset that are
