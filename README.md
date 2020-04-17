@@ -41,7 +41,6 @@ devtools::install_github("edwardlavender/utils.add")
 
 Some functions facilitate data extraction. These include:
 
-  - `%ni%` – The opposite of `%in%`
   - `isnt_na()` – Extract observations which are not NA
   - `substr_end()` – Extract the last n letters from a character
   - `around()` – Extract the rows in a dataframe around specified
