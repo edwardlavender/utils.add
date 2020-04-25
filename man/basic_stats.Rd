@@ -53,6 +53,11 @@ basic_stats(x,
 #### Example (5) Save typing by passing any arguments that apply to all functions via ...
 basic_stats(c(x, NA), f = list(mean = mean, min = min), na.rm = TRUE)
 
+#### Example (6) Unsupported outputs return a warning and the function defaults to 'ldf'
+\dontrun{
+basic_stats(1:10, output = "df")
+}
+
 }
 \author{
 Edward Lavender

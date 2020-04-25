@@ -33,6 +33,11 @@
 #' #### Example (5) Save typing by passing any arguments that apply to all functions via ...
 #' basic_stats(c(x, NA), f = list(mean = mean, min = min), na.rm = TRUE)
 #'
+#' #### Example (6) Unsupported outputs return a warning and the function defaults to 'ldf'
+#' \dontrun{
+#' basic_stats(1:10, output = "df")
+#' }
+#'
 #' @author Edward Lavender
 #' @export
 #'
@@ -56,6 +61,10 @@ basic_stats <-
   # wide-format dataframe
   wdf <- tidyr::spread(ldf, "statistic", "value")
   # return desired output
+  if(!(output %in% c("vec", "ldf", "wdf"))){
+    warning(paste0("output = '", output, "' not supported; defaulting to output = 'ldf'."))
+    output <- "ldf"
+  }
   return(eval(parse(text = output)))
   }
 
