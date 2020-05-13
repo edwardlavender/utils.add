@@ -6,7 +6,7 @@ Author: Edward Lavender
 Maintainer: Edward Lavender <el72@st-andrews.ac.uk>
 Description: This package provides functions for an eclectic and evolving collection of R operations implemented by the author in the course of scientific research.
 Imports:
-    plyr, dplyr, tidyr, lubridate, 
+    data.table, plyr, dplyr, tidyr, lubridate, 
     lunar, stringi, rlist
 Suggests:
     mgcv 

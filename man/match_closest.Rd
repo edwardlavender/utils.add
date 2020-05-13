@@ -12,23 +12,62 @@ match_closest(times, lookup)
 \item{lookup}{A vector of timestamps for which you will determine the position of the closest timestamp to each time in \code{times}.}
 }
 \value{
-The function returns a vector of positions which link times in one dataframe to observations closest in time in another dataframe.
+For a sequence of times (\code{times}), the function returns a vector of the positions of the nearest times in another sequence (\code{lookup}).
 }
 \description{
-This function is like \code{\link[base]{match}}, but the aim is to find the position in one dataframe that is the closest in time (\code{lookup}) to the time in another dataframe (\code{times}). The function is vectorised over the time in the first dataframe (\code{times}). This means that for every time inputted, the function finds the row in another dataframe which is closest in time to that time. For speed, the function assumes that the dataframe used for matching is arranged by timestamp.
+This function is like \code{\link[base]{match}}, but the aim is, for a given sequence of times (\code{times}), to find the positions in another sequence of times (\code{lookup}) that are closest in time to those in the first sequence. In other words, for every time inputted, \code{match_closest()} finds the position in another sequence of times which is closest in time to that time. This is useful if, for example, you have an existing dataframe to which you want to add the observations, held in another dataframe, that are closest in time to observations in the first dataframe (i.e., nearest neighbour interpolation). This function uses \code{\link[data.table]{data.table}} for fast matching, even with very large vectors.
 }
 \examples{
-#### Example (1)
+
+#### Define example data (1)
 # Define dataframe to which we want to add information
 d1 <- data.frame(t = seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-02"), by = "hours"))
 # Define dataframe in which information is contained
 d2 <- data.frame(t = seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-02"), by = "mins"))
 d2$vals <- runif(nrow(d2), 0, 50)
-# Use match_closest to add information to the first dataframe based on second dataframe
+
+#### Example (1): Given a sequence of times, identify the positions of the closest
+# ... corresponding observations in another sequence:
+# Use match_closest() to add information to the first dataframe based on second dataframe
 d1$position_in_d2 <- match_closest(times = d1$t, lookup = d2$t)
 d1$vals <- d2$vals[d1$position_in_d2]
 # Examine
 head(cbind(d1, d2[d1$position_in_d2, ]))
+
+#### Example (2): Relative to the times in 'times', the closest times in lookup may be
+# ... before/after a given observation:
+t1 <- as.POSIXct(c("2016-01-01 00:00:01", "2016-01-01 00:10:00",
+                   "2016-01-01 00:20:01", "2016-01-01 00:30:01"))
+t2 <- as.POSIXct(c("2016-01-01 00:00:00", "2016-01-01 00:11:00",
+                    "2016-01-01 00:50:01", "2016-01-01 00:22:01"))
+# The correct order here is as follows:
+# The first observation in t1 is closest (before) to t2[1]
+# The second observation in t2 is cloest (after) t2[2]
+# The third observation in t1 is closest (before) t2[4]
+# The fourth observation in t2 is closest (before) t2[4]
+# This is what is returned by match_closest():
+match_closest(t1, t2)
+
+#### Example (3) Input observations ('times' or 'lookup') do not need to be ordered by time:
+## Example with 'times' unordered:
+t1_unordered <- t1[c(2, 1, 4, 3)]
+# Manual examination of closest observations
+t1_unordered; t2
+# First observation in t1_unordered is closest to t2[2]
+# Second observation in t1_unordered is closest to t2[1]
+# Third observation in t1_unordered is closest to t2[4]
+# Fourth observation in t1_unordered is closest to t2[4]
+# Implement match_closest():
+match_closest(t1_unordered, t2)
+## Example with 'lookup' unordered
+t2_unordered <- t2[c(3, 1, 2, 4)]
+t1; t2_unordered
+# Correct order is 2, 3, 4, 4
+match_closest(t1, t2_unordered)
+## Example with both 'times' and 'lookup' unordered
+t1_unordered; t2_unordered
+# correct output is: 3, 2, 4, 4
+match_closest(t1_unordered, t2_unordered)
 
 }
 \author{
