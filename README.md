@@ -43,6 +43,8 @@ Some functions facilitate data extraction. These include:
 
   - `isnt_na()` – Extract observations which are not NA;
   - `substr_end()` – Extract the last n letters from a character;
+  - `pos_first_unique()` – Extract the first position of each unique
+    element in a vector;
   - `around()` – Extract the rows in a dataframe around specified
     position(s);
   - `match_closest()` – Extract the values in one dataset that are
