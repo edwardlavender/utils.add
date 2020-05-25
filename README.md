@@ -41,39 +41,41 @@ devtools::install_github("edwardlavender/utils.add")
 
 Some functions facilitate data extraction. These include:
 
-  - `isnt_na()` – Extract observations which are not NA
-  - `substr_end()` – Extract the last n letters from a character
+  - `isnt_na()` – Extract observations which are not NA;
+  - `substr_end()` – Extract the last n letters from a character;
   - `around()` – Extract the rows in a dataframe around specified
-    position(s)
+    position(s);
   - `match_closest()` – Extract the values in one dataset that are
-    closest in time to the times in another dataset
+    closest in time to the times in another dataset;
   - `sterm()` – Define `mgcv` model smooth term names (e.g. to extract
-    values from `mgcv::predict.gam()`)
+    values from `mgcv::predict.gam()`);
 
 ## Learn from data
 
 Some functions which facilitate learning from data. These include:
 
+  - `count_if()` – Count the number of observations which meet a
+    specified condition;
   - `basic_stats()` – Compute basic statistics (e.g. `mean`, `mode`,
-    etc.) for a sample
+    etc.) for a sample;
   - `difference()` – Compute the difference between two values (numbers
-    or timestamps)
+    or timestamps);
   - `serial_difference()` – Compute the difference between consecutive
-    pairs of values (numbers or timestamps) in a sequence
-  - `yday2date()` – Compute the date/month/season from the Julian day
+    pairs of values (numbers or timestamps) in a sequence;
+  - `yday2date()` – Compute the date/month/season from the Julian day;
 
 ## Modify data
 
 Some functions facilitate data modification. The include:
 
   - `add_list_null()` – add `list(NULL)` to a list in replacement of
-    `NULL` elements
-  - `list_merge()` – merge lists, accounting for empty lists
+    `NULL` elements;
+  - `list_merge()` – merge lists, accounting for empty lists;
 
 ## Common mathematical functions
 
-  - `linear()` – A linear function based on parameters `a` and `b`
+  - `linear()` – A linear function based on parameters `a` and `b`;
   - `quadratic()` – A quadratic function based on parameters `a`, `b`,
-    `h` and `k`
+    `h` and `k`;
   - `sigmoid()` – A (centred) sigmoidal function based on parameters
-    `x0`, `L` and `k`
+    `x0`, `L` and `k`;

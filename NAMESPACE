@@ -3,6 +3,7 @@
 export(add_list_null)
 export(around)
 export(basic_stats)
+export(count_if)
 export(difference)
 export(isnt.na)
 export(linear)
