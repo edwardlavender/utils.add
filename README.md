@@ -63,6 +63,8 @@ Some functions which facilitate learning from data. These include:
   - `serial_difference()` – Compute the difference between consecutive
     pairs of values (numbers or timestamps) in a sequence;
   - `yday2date()` – Compute the date/month/season from the Julian day;
+  - `mmyy()` – Define (ordered) month-year categories from timeseries
+    data;
 
 ## Modify data
 
