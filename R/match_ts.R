@@ -169,6 +169,10 @@ match_ts_nearest_by_key <- function(d1, d2, key_col, time_col){
   # Check dataframes contain required columns
   stopifnot(all(c(key_col, time_col) %in% colnames(d1)))
   stopifnot(all(c(key_col, time_col) %in% colnames(d2)))
+  # Check that all keys in d1 are in d2 and, if not, return a warning
+  if(!all(unique(d1[, key_col]) %in% unique(d2[, key_col]))){
+    warning("Not all unique keys in d1 are found in d2.")
+  }
   # Define datatables
   dt1 <- data.table::data.table(ky = d1[, key_col], t = d1[, time_col],  d1_index = 1:nrow(d1))
   dt2 <- data.table::data.table(ky = d2[, key_col], t = d2[, time_col],  d2_index = 1:nrow(d2))
