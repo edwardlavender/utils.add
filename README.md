@@ -14,6 +14,7 @@ generally fall into one of the following themes:
   - Learn from data
   - Modify data
   - Common mathematical operations
+  - Development tools
 
 It is important to emphasise that `utils.add` is not a comprehensive
 package designed to deliver any one of these themes: many R packages
@@ -83,3 +84,9 @@ Some functions facilitate data modification. The include:
     `h` and `k`;
   - `sigmoid()` – A (centred) sigmoidal function based on parameters
     `x0`, `L` and `k`;
+
+## Development tools
+
+  - `check...()` – Check arguments supplied via `...` within a function;
+  - `check_input()` – Check inputs supplied to a function to ensure that
+    they are supported;

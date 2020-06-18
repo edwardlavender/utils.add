@@ -17,6 +17,9 @@ For a sequence of times (\code{times}), the function returns a vector of the pos
 \description{
 This function is like \code{\link[base]{match}}, but the aim is, for a given sequence of times (\code{times}), to find the positions in another sequence of times (\code{lookup}) that are nearest in time to those in the first sequence. In other words, for every time inputted, \code{match_ts_nearest()} finds the position in another sequence of times which is nearest in time to that time. This is useful if, for example, you have an existing dataframe to which you want to add the observations, held in another dataframe, that are nearest in time to observations in the first dataframe (i.e., nearest neighbour interpolation). This function uses \code{\link[data.table]{data.table}} for fast matching, even with very large vectors.
 }
+\details{
+If there are multiple matches, only the first is returned.
+}
 \examples{
 
 #### Define example data (1)

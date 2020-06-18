@@ -19,7 +19,10 @@ match_ts_nearest_by_key(d1, d2, key_col, time_col)
 For a dataframe comprising observations from a series of factor levels (e.g., individuals) collected through time, the function returns a vector of positions in a second dataframe which, for the appropriate factor level, are nearest in time.
 }
 \description{
-For two dataframes, \code{d1} and \code{d2}, this function finds the positions in the second dataframe which, for each key (e.g., factor level, individual) in the first dataframe, are nearest in time for the same key in the second dataframe.
+For two dataframes, \code{d1} and \code{d2}, this function finds the positions in the second dataframe which, for each key (e.g., factor level, individual) in the first dataframe, are nearest in time (i.e., nearest neighbour interpolation accounting for observations from different factor levels).
+}
+\details{
+If there are multiple matches, only the first is returned.
 }
 \examples{
 #### Example (1)
