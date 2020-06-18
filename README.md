@@ -48,8 +48,6 @@ Some functions facilitate data extraction. These include:
     element in a vector;
   - `around()` – Extract the rows in a dataframe around specified
     position(s);
-  - `match_closest()` – Extract the values in one dataset that are
-    closest in time to the times in another dataset;
   - `sterm()` – Define `mgcv` model smooth term names (e.g. to extract
     values from `mgcv::predict.gam()`);
 
@@ -61,13 +59,6 @@ Some functions which facilitate learning from data. These include:
     specified condition;
   - `basic_stats()` – Compute basic statistics (e.g. `mean`, `mode`,
     etc.) for a sample;
-  - `difference()` – Compute the difference between two values (numbers
-    or timestamps);
-  - `serial_difference()` – Compute the difference between consecutive
-    pairs of values (numbers or timestamps) in a sequence;
-  - `yday2date()` – Compute the date/month/season from the Julian day;
-  - `mmyy()` – Define (ordered) month-year categories from timeseries
-    data;
 
 ## Modify data
 
