@@ -59,6 +59,9 @@ Some functions which facilitate learning from data. These include:
     specified condition;
   - `basic_stats()` – Compute basic statistics (e.g. `mean`, `mode`,
     etc.) for a sample;
+  - `seq_range()` – Generate a sequence between two values;
+  - `round_range()` – Round a range down and up at lower/upper limits
+    respectively;
 
 ## Modify data
 
