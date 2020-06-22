@@ -41,10 +41,10 @@ check... <- function(not_allowed,...){
 
 ######################################
 ######################################
-#### check_input()
+#### check_input_value()
 
-#' @title Check the input to a parent function argument
-#' @description Within a function, this function checks the input to an argument of that function. If the input is supported, the function simply returns this value. If the input is not supported, the function returns a warning and the default value. This function is designed to be implemented internally within functions and not intended for general use.
+#' @title Check the input value to a parent function argument
+#' @description Within a function, this function checks the value of an input to an argument of that function. If the input value is supported, the function simply returns this value. If the input is not supported, the function returns a warning and the default value. This function is designed to be implemented internally within functions and not intended for general use.
 #'
 #' @param arg A character string which defines the argument of the parent function.
 #' @param input The input to an argument of a parent function.
@@ -87,6 +87,51 @@ check_input <- function(arg, input, supp, default = supp[1]){
   # Return input
   return(input)
 }
+
+
+###################################
+###################################
+#### check_input_class()
+
+#' @title Check the class of an function input to a parent function
+#' @description This function checks that the class of an input to a parent function is appropriate. If not, the function produces a helpful error message.
+#' @param arg A character string which defines the argument of the parent function.
+#' @param input The input to an argument of a parent function.
+#' @param class The required class of the input.
+#' @return The function checks the class of the input. If the class is not the same as required by the parent function (i.e., as specified by \code{class}), the function returns a helpful error message.
+#'
+#' @examples
+#' #### Example (1): Imagine we have an argument, x, to a function, the input to which must be a list.
+#' # This input passes the check:
+#' check_input_class("x", list(), "list")
+#' \dontrun{
+#' # This input fails the check:
+#' check_input_class("x", list(), "Date")
+#' }
+#'
+#' #### Example (2): Implementation within a parent function
+#' nest_list_in_list <- function(x){
+#'   check_input_class("x", x, "list")
+#'   if(inherits(x, "list")){
+#'     return(list(x))
+#'   }
+#' }
+#' nest_list_in_list(list())
+#' \dontrun{
+#' nest_list_in_list("a")
+#' }
+#'
+#' @author Edward Lavender
+#' @export
+#'
+
+check_input_class <-
+  function(arg, input, class){
+    if(!inherits(input, class)){
+      stop(paste0("Argument '", arg, "' must be of class '", class, "', not class '", class(input), "'."))
+    }
+  }
+
 
 
 #### End of code.

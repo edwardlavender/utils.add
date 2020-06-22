@@ -2,7 +2,7 @@
 % Please edit documentation in R/checks.R
 \name{check_input}
 \alias{check_input}
-\title{Check the input to a parent function argument}
+\title{Check the input value to a parent function argument}
 \usage{
 check_input(arg, input, supp, default = supp[1])
 }
@@ -19,7 +19,7 @@ check_input(arg, input, supp, default = supp[1])
 The function returns \code{input} or \code{default} (the latter with a warning) depending on whether or not \code{input} is within \code{supp} (i.e., whether or not the input to the argument of a parent function is supported).
 }
 \description{
-Within a function, this function checks the input to an argument of that function. If the input is supported, the function simply returns this value. If the input is not supported, the function returns a warning and the default value. This function is designed to be implemented internally within functions and not intended for general use.
+Within a function, this function checks the value of an input to an argument of that function. If the input value is supported, the function simply returns this value. If the input is not supported, the function returns a warning and the default value. This function is designed to be implemented internally within functions and not intended for general use.
 }
 \examples{
 
