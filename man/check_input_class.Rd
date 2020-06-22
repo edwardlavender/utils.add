@@ -4,7 +4,7 @@
 \alias{check_input_class}
 \title{Check the class of an function input to a parent function}
 \usage{
-check_input_class(arg, input, class)
+check_input_class(arg, input, class, type = "stop", coerce_input)
 }
 \arguments{
 \item{arg}{A character string which defines the argument of the parent function.}
@@ -12,15 +12,20 @@ check_input_class(arg, input, class)
 \item{input}{The input to an argument of a parent function.}
 
 \item{class}{The required class of the input.}
+
+\item{type}{A character which specifies whether to return an error (\code{"stop"}) or a warning ("warning").}
+
+\item{coerce_input}{A function used to coerce \code{input} to the correct object type, if \code{type = "warning"}.}
 }
 \value{
-The function checks the class of the input. If the class is not the same as required by the parent function (i.e., as specified by \code{class}), the function returns a helpful error message.
+The function checks the class of the input. If the class is not the same as required by the parent function (i.e., as specified by \code{class}), the function returns a helpful error message, or a warning and an object whose class has been coerced to the correct class.
 }
 \description{
-This function checks that the class of an input to a parent function is appropriate. If not, the function produces a helpful error message.
+This function checks that the class of an input to a parent function is appropriate. If not, the function either produces a helpful error message or returns a warning.
 }
 \examples{
-#### Example (1): Imagine we have an argument, x, to a function, the input to which must be a list.
+#### Example (1): Implementation using default options outside of a function
+# Imagine we have an argument, x, to a function, the input to which must be a list.
 # This input passes the check:
 check_input_class("x", list(), "list")
 \dontrun{
@@ -39,6 +44,11 @@ nest_list_in_list(list())
 \dontrun{
 nest_list_in_list("a")
 }
+
+#### Example (3) Return a warning rather than an error
+
+x <- as.POSIXct("2016-01-01")
+check_input_class("x", x, "Date", type = "warning", coerce_input = as.Date)
 
 }
 \author{

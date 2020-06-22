@@ -94,14 +94,17 @@ check_input <- function(arg, input, supp, default = supp[1]){
 #### check_input_class()
 
 #' @title Check the class of an function input to a parent function
-#' @description This function checks that the class of an input to a parent function is appropriate. If not, the function produces a helpful error message.
+#' @description This function checks that the class of an input to a parent function is appropriate. If not, the function either produces a helpful error message or returns a warning.
 #' @param arg A character string which defines the argument of the parent function.
 #' @param input The input to an argument of a parent function.
 #' @param class The required class of the input.
-#' @return The function checks the class of the input. If the class is not the same as required by the parent function (i.e., as specified by \code{class}), the function returns a helpful error message.
+#' @param type A character which specifies whether to return an error (\code{"stop"}) or a warning ("warning").
+#' @param coerce_input A function used to coerce \code{input} to the correct object type, if \code{type = "warning"}.
+#' @return The function checks the class of the input. If the class is not the same as required by the parent function (i.e., as specified by \code{class}), the function returns a helpful error message, or a warning and an object whose class has been coerced to the correct class.
 #'
 #' @examples
-#' #### Example (1): Imagine we have an argument, x, to a function, the input to which must be a list.
+#' #### Example (1): Implementation using default options outside of a function
+#' # Imagine we have an argument, x, to a function, the input to which must be a list.
 #' # This input passes the check:
 #' check_input_class("x", list(), "list")
 #' \dontrun{
@@ -121,16 +124,33 @@ check_input <- function(arg, input, supp, default = supp[1]){
 #' nest_list_in_list("a")
 #' }
 #'
+#' #### Example (3) Return a warning rather than an error
+#'
+#' x <- as.POSIXct("2016-01-01")
+#' check_input_class("x", x, "Date", type = "warning", coerce_input = as.Date)
+#'
 #' @author Edward Lavender
 #' @export
 #'
 
 check_input_class <-
-  function(arg, input, class){
+  function(arg, input, class, type = "stop", coerce_input){
     if(!inherits(input, class)){
-      stop(paste0("Argument '", arg, "' must be of class '", class, "', not class '", class(input), "'."))
+      if(type == "stop"){
+        msg <- paste0("Argument '", arg, "' must be of class '", class, "', not class '", class(input), "'.")
+        stop(msg)
+      } else if(type == "warning"){
+        msg <- paste0("Argument '", arg, "' coerced to class '", class, "' from class '", class(input), "'.")
+        warning(msg)
+        return(coerce_input(input))
+      }
     }
   }
+
+
+######################################
+######################################
+#### check_tz()
 
 
 
