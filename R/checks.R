@@ -152,6 +152,36 @@ check_input_class <-
 ######################################
 #### check_tz()
 
+#' @title Check the timezone of an object and force UTC if absent
+#' @description This function checks the time zone of an inputted  object. If the object is of class Date or POSIXct and a time zone is absent, then "UTC" is forced. Otherwise, the object is returned unchanged.
+#' @param arg (optional) A character string which defines the argument of the parent function.
+#' @param x An object.
+#' @return An object as inputted in which, if the object is of class Date or POSIXct and a time zone is absent, time zone "UTC" is forced.
+#'
+#' @examples
+#' check_tz(x = as.POSIXct("2016-01-01"))
+#' check_tz(arg = "t", x = as.POSIXct("2016-01-01"))
+#' check_tz(arg = "t", x = as.POSIXct("2016-01-01", tz = "UTC"))
+#'
+#' @author Edward Lavender
+#' @export
+
+check_tz <-
+  function(arg = NULL, x){
+    if(inherits(x, "Date") | inherits(x, "POSIXct")){
+      if(lubridate::tz(x) == ""){
+        if(is.null(arg)){
+          msg <- "time zone currently ''; tz forced to UTC."
+        } else{
+          msg <- paste0("Argument '", arg, "' time zone currently ''; tz forced to UTC.")
+        }
+        warning(msg)
+        lubridate::tz(x) <- "UTC"
+      }
+    }
+    return(x)
+  }
+
 
 
 #### End of code.
