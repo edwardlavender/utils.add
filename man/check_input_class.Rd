@@ -4,14 +4,23 @@
 \alias{check_input_class}
 \title{Check the class of an function input to a parent function}
 \usage{
-check_input_class(arg, input, class, type = "stop", coerce_input)
+check_input_class(
+  arg,
+  input,
+  if_class = NULL,
+  to_class,
+  type = "stop",
+  coerce_input
+)
 }
 \arguments{
 \item{arg}{A character string which defines the argument of the parent function.}
 
 \item{input}{The input to an argument of a parent function.}
 
-\item{class}{The required class of the input.}
+\item{if_class}{(optional) A character vector of classes of object. If supplied, the function will only proceed to check the class of the object if the \code{class(input)} is one of \code{if_class}. This is useful if \code{check_input_class()} is implemented in a loop.}
+
+\item{to_class}{The required class of the input.}
 
 \item{type}{A character which specifies whether to return an error (\code{"stop"}) or a warning ("warning").}
 
@@ -27,15 +36,15 @@ This function checks that the class of an input to a parent function is appropri
 #### Example (1): Implementation using default options outside of a function
 # Imagine we have an argument, x, to a function, the input to which must be a list.
 # This input passes the check:
-check_input_class("x", list(), "list")
+check_input_class(arg = "x", input = list(), to_class = "list")
 \dontrun{
 # This input fails the check:
-check_input_class("x", list(), "Date")
+check_input_class(arg = "x", input = list(), to_class = "Date")
 }
 
 #### Example (2): Implementation within a parent function
 nest_list_in_list <- function(x){
-  check_input_class("x", x, "list")
+  check_input_class(arg = "x", input = x, to_class = "list")
   if(inherits(x, "list")){
     return(list(x))
   }
@@ -46,9 +55,19 @@ nest_list_in_list("a")
 }
 
 #### Example (3) Return a warning rather than an error
-
 x <- as.POSIXct("2016-01-01")
-check_input_class("x", x, "Date", type = "warning", coerce_input = as.Date)
+check_input_class(arg = "x", input = x, to_class = "Date",
+                  type = "warning", coerce_input = as.Date)
+
+#### Example (4) Only act on objects of a certain class; otherwise, return objects unchanged.
+# In this case the function checks x:
+check_input_class(arg = "x", input = x,
+                  if_class = c("POSIXct", "Date"),
+                  to_class = "Date", type = "warning", coerce_input = as.Date)
+# In this case the function does not check x
+check_input_class(arg = "x", input = 5,
+                  if_class = c("POSIXct", "Date"),
+                  to_class = "Date", type = "warning", coerce_input = as.Date)
 
 }
 \author{

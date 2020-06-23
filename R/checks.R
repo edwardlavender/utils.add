@@ -97,7 +97,8 @@ check_input <- function(arg, input, supp, default = supp[1]){
 #' @description This function checks that the class of an input to a parent function is appropriate. If not, the function either produces a helpful error message or returns a warning.
 #' @param arg A character string which defines the argument of the parent function.
 #' @param input The input to an argument of a parent function.
-#' @param class The required class of the input.
+#' @param if_class (optional) A character vector of classes of object. If supplied, the function will only proceed to check the class of the object if the \code{class(input)} is one of \code{if_class}. This is useful if \code{check_input_class()} is implemented in a loop.
+#' @param to_class The required class of the input.
 #' @param type A character which specifies whether to return an error (\code{"stop"}) or a warning ("warning").
 #' @param coerce_input A function used to coerce \code{input} to the correct object type, if \code{type = "warning"}.
 #' @return The function checks the class of the input. If the class is not the same as required by the parent function (i.e., as specified by \code{class}), the function returns a helpful error message, or a warning and an object whose class has been coerced to the correct class.
@@ -106,15 +107,15 @@ check_input <- function(arg, input, supp, default = supp[1]){
 #' #### Example (1): Implementation using default options outside of a function
 #' # Imagine we have an argument, x, to a function, the input to which must be a list.
 #' # This input passes the check:
-#' check_input_class("x", list(), "list")
+#' check_input_class(arg = "x", input = list(), to_class = "list")
 #' \dontrun{
 #' # This input fails the check:
-#' check_input_class("x", list(), "Date")
+#' check_input_class(arg = "x", input = list(), to_class = "Date")
 #' }
 #'
 #' #### Example (2): Implementation within a parent function
 #' nest_list_in_list <- function(x){
-#'   check_input_class("x", x, "list")
+#'   check_input_class(arg = "x", input = x, to_class = "list")
 #'   if(inherits(x, "list")){
 #'     return(list(x))
 #'   }
@@ -125,26 +126,56 @@ check_input <- function(arg, input, supp, default = supp[1]){
 #' }
 #'
 #' #### Example (3) Return a warning rather than an error
-#'
 #' x <- as.POSIXct("2016-01-01")
-#' check_input_class("x", x, "Date", type = "warning", coerce_input = as.Date)
+#' check_input_class(arg = "x", input = x, to_class = "Date",
+#'                   type = "warning", coerce_input = as.Date)
+#'
+#' #### Example (4) Only act on objects of a certain class; otherwise, return objects unchanged.
+#' # In this case the function checks x:
+#' check_input_class(arg = "x", input = x,
+#'                   if_class = c("POSIXct", "Date"),
+#'                   to_class = "Date", type = "warning", coerce_input = as.Date)
+#' # In this case the function does not check x
+#' check_input_class(arg = "x", input = 5,
+#'                   if_class = c("POSIXct", "Date"),
+#'                   to_class = "Date", type = "warning", coerce_input = as.Date)
 #'
 #' @author Edward Lavender
 #' @export
 #'
 
 check_input_class <-
-  function(arg, input, class, type = "stop", coerce_input){
-    if(!inherits(input, class)){
-      if(type == "stop"){
-        msg <- paste0("Argument '", arg, "' must be of class '", class, "', not class '", class(input), "'.")
-        stop(msg)
-      } else if(type == "warning"){
-        msg <- paste0("Argument '", arg, "' coerced to class '", class, "' from class '", class(input), "'.")
-        warning(msg)
-        return(coerce_input(input))
+  function(arg, input, if_class = NULL, to_class, type = "stop", coerce_input){
+
+    #### Define whether or not to proceed:
+    # Only proceed if if_class is NULL or, if supplied, then only proceed if the class of the object
+    # ... is of type(s) in if_class
+    proceed <- FALSE
+    if(is.null(if_class)){
+      proceed <- TRUE
+    } else{
+      if(inherits(input, if_class)) proceed <- TRUE
+    }
+
+    #### Check the class, if required
+    if(proceed){
+      # If the object is not of the necessary class
+      if(!inherits(input, to_class)){
+        # Either stop...
+        if(type == "stop"){
+          msg <- paste0("Argument '", arg, "' must be of class '", to_class, "', not class(es): '", paste(class(input), collapse = "', '"), "'.")
+          stop(msg)
+        # Or print a warning and use coerce_input() to convert the object to the desired class.
+        } else if(type == "warning"){
+          msg <- paste0("Argument '", arg, "' coerced to class '", to_class, "' from class(es): '", paste(class(input), collapse = "', '"), "'.")
+          warning(msg)
+          input <- coerce_input(input)
+        }
       }
     }
+
+    #### If we've passed all checks, return the input (possibly coerced to a new class)
+    return(input)
   }
 
 
