@@ -62,6 +62,7 @@ Some functions which facilitate learning from data. These include:
   - `seq_range()` – Generate a sequence between two values;
   - `round_range()` – Round a range down and up at lower/upper limits
     respectively;
+  - `clip_within_range()` – Clip a vector to lie within a range;
 
 ## Modify data
 
