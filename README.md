@@ -89,3 +89,4 @@ Some functions facilitate data modification. The include:
     supplied to a parent function is appropriate;
   - `check_tz()` – Check the time zone of an object and, if appropriate
     and necessary, force UTC;
+  - `check_named_list()` – Check that a list is named;
