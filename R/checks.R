@@ -59,7 +59,7 @@ check... <- function(not_allowed,...){
 #' # The function returns 1 or 2, depending on the input to 'output'
 #' return_1_or_2 <- function(output = 1){
 #'   # Check the output, changing the output to the default if necessary
-#'   output <- check_input(arg = "output", input = output, supp = 1:2, default = 1)
+#'   output <- check_input_value(arg = "output", input = output, supp = 1:2, default = 1)
 #'   # Return a value according to 'output'
 #'   if(output == 1) return(1) else if(output == 2) return(2)
 #' }
@@ -77,7 +77,7 @@ check... <- function(not_allowed,...){
 #' @export
 #'
 
-check_input <- function(arg, input, supp, default = supp[1]){
+check_input_value <- function(arg, input, supp, default = supp[1]){
   # If the input is not in a vector of supported arguments...
   if(!(input %in% supp)){
     # Provide a warning and revert to the default
