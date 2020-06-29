@@ -41,7 +41,7 @@ check... <- function(not_allowed,...){
 
 ######################################
 ######################################
-#### check_input_value()
+#### check_value()
 
 #' @title Check the input value to a parent function argument
 #' @description Within a function, this function checks the value of an input to an argument of that function. If the input value is supported, the function simply returns this value. If the input is not supported, the function returns a warning and the default value. This function is designed to be implemented internally within functions and not intended for general use.
@@ -59,7 +59,7 @@ check... <- function(not_allowed,...){
 #' # The function returns 1 or 2, depending on the input to 'output'
 #' return_1_or_2 <- function(output = 1){
 #'   # Check the output, changing the output to the default if necessary
-#'   output <- check_input_value(arg = "output", input = output, supp = 1:2, default = 1)
+#'   output <- check_value(arg = "output", input = output, supp = 1:2, default = 1)
 #'   # Return a value according to 'output'
 #'   if(output == 1) return(1) else if(output == 2) return(2)
 #' }
@@ -77,11 +77,11 @@ check... <- function(not_allowed,...){
 #' @export
 #'
 
-check_input_value <- function(arg, input, supp, default = supp[1]){
+check_value <- function(arg = deparse(substitute(input)), input, supp, default = supp[1]){
   # If the input is not in a vector of supported arguments...
   if(!(input %in% supp)){
     # Provide a warning and revert to the default
-    warning(paste0("Input to argument ", arg, " (", input, ") is not supported; defaulting to ", arg, " = ", default, ".\n"))
+    warning(paste0("Argument '", arg, "' = ", input, " is not supported; defaulting to ", arg, " = ", default, ".\n"))
     input <- default
   }
   # Return input
@@ -91,13 +91,13 @@ check_input_value <- function(arg, input, supp, default = supp[1]){
 
 ###################################
 ###################################
-#### check_input_class()
+#### check_class()
 
 #' @title Check the class of an function input to a parent function
 #' @description This function checks that the class of an input to a parent function is appropriate. If not, the function either produces a helpful error message or returns a warning.
 #' @param arg A character string which defines the argument of the parent function.
 #' @param input The input to an argument of a parent function.
-#' @param if_class (optional) A character vector of classes of object. If supplied, the function will only proceed to check the class of the object if the \code{class(input)} is one of \code{if_class}. This is useful if \code{check_input_class()} is implemented in a loop.
+#' @param if_class (optional) A character vector of classes of object. If supplied, the function will only proceed to check the class of the object if the \code{class(input)} is one of \code{if_class}. This is useful if \code{check_class()} is implemented in a loop.
 #' @param to_class The required class of the input.
 #' @param type A character which specifies whether to return an error (\code{"stop"}) or a warning ("warning").
 #' @param coerce_input A function used to coerce \code{input} to the correct object type, if \code{type = "warning"}.
@@ -107,15 +107,15 @@ check_input_value <- function(arg, input, supp, default = supp[1]){
 #' #### Example (1): Implementation using default options outside of a function
 #' # Imagine we have an argument, x, to a function, the input to which must be a list.
 #' # This input passes the check:
-#' check_input_class(arg = "x", input = list(), to_class = "list")
+#' check_class(arg = "x", input = list(), to_class = "list")
 #' \dontrun{
 #' # This input fails the check:
-#' check_input_class(arg = "x", input = list(), to_class = "Date")
+#' check_class(arg = "x", input = list(), to_class = "Date")
 #' }
 #'
 #' #### Example (2): Implementation within a parent function
 #' nest_list_in_list <- function(x){
-#'   check_input_class(arg = "x", input = x, to_class = "list")
+#'   check_class(arg = "x", input = x, to_class = "list")
 #'   if(inherits(x, "list")){
 #'     return(list(x))
 #'   }
@@ -127,16 +127,16 @@ check_input_value <- function(arg, input, supp, default = supp[1]){
 #'
 #' #### Example (3) Return a warning rather than an error
 #' x <- as.POSIXct("2016-01-01")
-#' check_input_class(arg = "x", input = x, to_class = "Date",
+#' check_class(arg = "x", input = x, to_class = "Date",
 #'                   type = "warning", coerce_input = as.Date)
 #'
 #' #### Example (4) Only act on objects of a certain class; otherwise, return objects unchanged.
 #' # In this case the function checks x:
-#' check_input_class(arg = "x", input = x,
+#' check_class(arg = "x", input = x,
 #'                   if_class = c("POSIXct", "Date"),
 #'                   to_class = "Date", type = "warning", coerce_input = as.Date)
 #' # In this case the function does not check x
-#' check_input_class(arg = "x", input = 5,
+#' check_class(arg = "x", input = 5,
 #'                   if_class = c("POSIXct", "Date"),
 #'                   to_class = "Date", type = "warning", coerce_input = as.Date)
 #'
@@ -144,8 +144,8 @@ check_input_value <- function(arg, input, supp, default = supp[1]){
 #' @export
 #'
 
-check_input_class <-
-  function(arg, input, if_class = NULL, to_class, type = "stop", coerce_input){
+check_class <-
+  function(arg = deparse(substitute(input)), input, if_class = NULL, to_class, type = "stop", coerce_input){
 
     #### Define whether or not to proceed:
     # Only proceed if if_class is NULL or, if supplied, then only proceed if the class of the object
@@ -226,31 +226,27 @@ check_names <- function(arg = deparse(substitute(input)), input, req, extract_na
 #' @title Check the timezone of an object and force UTC if absent
 #' @description This function checks the time zone of an inputted  object. If the object is of class Date or POSIXct and a time zone is absent, then "UTC" is forced. Otherwise, the object is returned unchanged.
 #' @param arg (optional) A character string which defines the argument of the parent function.
-#' @param x An object.
+#' @param input An object.
 #' @return An object as inputted in which, if the object is of class Date or POSIXct and a time zone is absent, time zone "UTC" is forced.
 #'
 #' @examples
-#' check_tz(x = as.POSIXct("2016-01-01"))
-#' check_tz(arg = "t", x = as.POSIXct("2016-01-01"))
-#' check_tz(arg = "t", x = as.POSIXct("2016-01-01", tz = "UTC"))
+#' check_tz(input = as.POSIXct("2016-01-01"))
+#' check_tz(arg = "t", input = as.POSIXct("2016-01-01"))
+#' check_tz(arg = "t", input = as.POSIXct("2016-01-01", tz = "UTC"))
 #'
 #' @author Edward Lavender
 #' @export
 
 check_tz <-
-  function(arg = NULL, x){
-    if(inherits(x, "Date") | inherits(x, "POSIXct")){
-      if(lubridate::tz(x) == ""){
-        if(is.null(arg)){
-          msg <- "time zone currently ''; tz forced to UTC."
-        } else{
+  function(arg = deparse(substitute(input)), input){
+    if(inherits(input, "Date") | inherits(input, "POSIXct")){
+      if(lubridate::tz(input) == ""){
           msg <- paste0("Argument '", arg, "' time zone currently ''; tz forced to UTC.")
-        }
-        warning(msg)
-        lubridate::tz(x) <- "UTC"
+          warning(msg)
+          lubridate::tz(input) <- "UTC"
       }
     }
-    return(x)
+    return(input)
   }
 
 
@@ -261,42 +257,38 @@ check_tz <-
 #' @title Check that a list is named
 #' @description This function checks that the top level of a list is named (ignoring empty lists if requested). If the list is not named, the function returns a helpful error message. Otherwise, the list is returned unchanged. This is particularly useful within functions that use \code{\link[base]{do.call}} to evaluate lists of arguments.
 #' @param arg (optional) A character string which defines the argument of a parent function.
-#' @param l A list.
+#' @param input A list.
 #' @param ignore_empty A logical input which defines whether or not to ignore empty lists.
 #' @return The function returns a helpful error message for unnamed lists (ignoring empty lists if requested) or the inputted list unchanged.
 #'
 #' @examples
-#' # This returns l unchanged:
-#' check_named_list(l = list(), ignore_empty = TRUE)
-#' check_named_list(l = list(a = "b"))
+#' # This returns input unchanged:
+#' check_named_list(input = list(), ignore_empty = TRUE)
+#' check_named_list(input = list(a = "b"))
 #' # This returns an error:
 #' \dontrun{
-#' #' check_named_list(l = list(), ignore_empty = FALSE)
+#' #' check_named_list(input = list(), ignore_empty = FALSE)
 #' }
 #' # This returns an error which includes the argument name:
 #' \dontrun{
-#' check_named_list(arg = "x", l = list(1))
+#' check_named_list(arg = "x", input = list(1))
 #' }
 #'
 #' @author Edward Lavender
 #' @export
 
-check_named_list <- function(arg = NULL, l, ignore_empty = TRUE){
-  if(plotrix::listDepth(l) > 1){
+check_named_list <- function(arg = deparse(substitute(input)), input, ignore_empty = TRUE){
+  if(plotrix::listDepth(input) > 1){
     warning("Input list of check_named_list() is of depth > 1; only the top level is checked.")
   }
-  list_is_empty <- (length(l) == 0)
+  list_is_empty <- (length(input) == 0)
   if(!list_is_empty | !ignore_empty){
-    if(is.null(names(l)) | any(names(l) %in% "")){
-      if(is.null(arg)){
-        msg <- "Argument must be a named list."
-      } else {
-        msg <- paste0("Argument '", arg, "' must be a named list.")
-      }
+    if(is.null(names(input)) | any(names(input) %in% "")){
+      msg <- paste0("Argument '", arg, "' must be a named list.")
       stop(msg)
     }
   }
-  return(l)
+  return(input)
 }
 
 

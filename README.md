@@ -83,9 +83,9 @@ Some functions facilitate data modification. The include:
 ## Development tools
 
   - `check...()` – Check arguments supplied via `...` within a function;
-  - `check_input_value()` – Check that the value of an input supplied to
-    a parent function is appropriate;
-  - `check_input_class()` – Check that the class of an inputted object
+  - `check_value()` – Check that the value of an input supplied to a
+    parent function is appropriate;
+  - `check_class()` – Check that the class of an inputted object
     supplied to a parent function is appropriate;
   - `check_tz()` – Check the time zone of an object and, if appropriate
     and necessary, force UTC;
