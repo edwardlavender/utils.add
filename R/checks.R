@@ -189,7 +189,7 @@ check_class <-
 #' @param req A character vector of required names.
 #' @param extract_names A function which is used to extract names from \code{input}, such as \code{\link[base]{names}} or \code{\link[base]{colnames}}.
 #' @param type A function which defines the failure criteria. For example, if \code{type = all}, the function will return an error unless all the names in \code{req} are contained within \code{input}. This is the default. If \code{type = any}, the function will return an error only if none of the names in \code{req} are contained within \code{input}.
-#' @return If the input fails the check, the function returns a helpful error mesaage. Otherwise, nothing is returned.
+#' @return If the input fails the check, the function returns a helpful error message. Otherwise, nothing is returned.
 #' @examples
 #' \dontrun{
 #' check_names(input = list(x = 1, y = 1),
