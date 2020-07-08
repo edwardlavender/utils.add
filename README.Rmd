@@ -47,6 +47,7 @@ Some functions facilitate data extraction. These include:
   * `isnt_na()` -- Extract observations which are not NA;
   * `substr_end()` -- Extract the last n letters from a character;
   * `pos_first_unique()` -- Extract the first position of each unique element in a vector;
+  * `left()` and `right()` -- Explore the left and right hand side of a dataframe of matrix respectively;
   * `around()` -- Extract the rows in a dataframe around specified position(s);
   * `sterm()` -- Define `mgcv` model smooth term names (e.g. to extract values from `mgcv::predict.gam()`);
 

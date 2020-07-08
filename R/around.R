@@ -1,3 +1,7 @@
+####################################
+####################################
+#### around()
+
 #' @title Return the rows around a specified position in a dataframe
 #' @description This is a function like \code{\link[utils]{head}} or \code{\link[utils]{tail}} for dataframes which displays the values around a specified position.
 #'
@@ -34,14 +38,7 @@
 #' @export
 #'
 
-######################################################
-######################################################
-#### around()
-
-# Define function:
 around <-
-  # Define the dataframe, the position around which we want to examine
-  # ... and the number of rows (n) above and below this row which we'll examine.
   function(dataframe, position, n = 3, return = "list", verbose = TRUE){
     # Define message, displayed to the user
     # This is helpful if the user inputs a function for position,
@@ -70,7 +67,56 @@ around <-
   }
 
 
+####################################
+####################################
+#### right()
 
-#### End of function.
-######################################################
-######################################################
+#' @title Select the last \code{n} columns of a dataframe or matrix
+#' @description This function returns the last \code{n} columns of a dataframe or matrix.
+#' @param x A dataframe or matrix.
+#' @param n The number of columns to return.
+#' @return The function returns the last \code{n} columns of a dataframe or matrix.
+#' @examples
+#' right(x = data.frame(x = 1, y = 1, z = 1), n = 2L)
+#' @author Edward Lavender
+#' @export
+
+right <- function(x, n = 6L){
+  stopifnot(n > 0)
+  if(n > ncol(x)){
+    warning("n > ncol(x); simply returning x.")
+    return(x)
+  } else{
+    return(x[, (ncol(x)-n+1):ncol(x)])
+  }
+}
+
+
+####################################
+####################################
+#### left()
+
+#' @title Select the first \code{n} columns of a dataframe or matrix
+#' @description This function returns the first \code{n} columns of a dataframe or matrix.
+#' @param x A dataframe or matrix.
+#' @param n The number of columns to return.
+#' @return The function returns the first \code{n} columns of a dataframe or matrix.
+#' @author Edward Lavender
+#' @examples
+#' left(x = data.frame(x = 1, y = 1, z = 1), n = 4)
+#' @export
+
+left <- function(x, n = 6L){
+  stopifnot(n > 0)
+  if(n > ncol(x)){
+    warning("n > ncol(x); simply returning x.")
+    return(x)
+  } else{
+    return(x[, 1:n])
+  }
+}
+
+
+#### End of code.
+####################################
+####################################
