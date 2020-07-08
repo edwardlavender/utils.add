@@ -292,6 +292,43 @@ check_named_list <- function(arg = deparse(substitute(input)), input, ignore_emp
 }
 
 
+######################################
+######################################
+#### check_length()
+
+#' @title Check the length of an input to a parent function
+#' @description This function checks that the length of an input to a parent function is correct. If not, the function returns a helpful error message.
+#' @param arg (optional) A character string which defines the argument of a parent function.
+#' @param input An object.
+#' @param req_length A number which defines the required length of \code{input}.
+#' @param req_arg A character which defines the name of the object which defines the required length.
+#' @return The function returns a helpful error message for unnamed lists (ignoring empty lists if requested) or the inputted list unchanged.
+#' @examples
+#' \dontrun{
+#' x <- data.frame(x = 1, y = 1)
+#' labels = 1:10
+#' check_length(arg = "labels",
+#'              input = labels,
+#'              req_length = length(colnames(x)),
+#'              req_arg = "colnames(x)"
+#' )
+#' }
+#'
+#' @author Edward Lavender
+#' @export
+#'
+
+check_length <- function(arg = deparse(substitute(input)),
+                         input,
+                         req_length,
+                         req_arg = deparse(substitute(req_length))){
+  if(length(input) != req_length){
+    stop(paste0("The length of the argument '", arg, "' (=", length(input), ") must be the same as the length of ", req_arg, " (=", req_length, ")."), call. = FALSE)
+  }
+}
+
+
+
 #### End of code.
 ######################################
 ######################################

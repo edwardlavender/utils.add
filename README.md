@@ -92,3 +92,5 @@ Some functions facilitate data modification. The include:
   - `check_names()` – Check that required names are contained within an
     object;
   - `check_named_list()` – Check that a list is named;
+  - `check_length()` – Check that the length of an object is the
+    required length;
