@@ -81,6 +81,8 @@ check_value <- function(arg = deparse(substitute(input)), input, supp, default =
   # If the input is not in a vector of supported arguments...
   if(!(input %in% supp)){
     # Provide a warning and revert to the default
+    if(is.character(input)) input <- paste0("',", input, "'")
+    if(is.character(default)) default <- paste0("'", default, "'")
     warning(paste0("Argument '", arg, "' = ", input, " is not supported; defaulting to ", arg, " = ", default, ".\n"))
     input <- default
   }
