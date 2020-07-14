@@ -329,6 +329,30 @@ check_length <- function(arg = deparse(substitute(input)),
   }
 }
 
+######################################
+######################################
+#### check_dir()
+
+#' @title Check a directory exists
+#' @description This function checks whether a directory exists and, if not, returns an informative error message.
+#' @param arg (optional) A character string which defines the argument of a parent function.
+#' @param input A character string which defines a directory.
+#' @return The function checks whether or not a directory exists and, if not, returns an informative error message.
+#' @examples
+#' \dontrun{
+#' check_dir(arg = "silly",
+#'           input = ".~/this_is_a_silly_directory/")
+#' }
+#' @author Edward Lavender
+#' @export
+#'
+
+check_dir <- function(arg = deparse(substitute(input)),
+                      input){
+  if(!dir.exists(input)){
+    stop(paste0("The directory inputted to the argument '", arg, "' ('", input, "') does not exist."), call. = FALSE)
+  }
+}
 
 
 #### End of code.
