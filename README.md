@@ -25,16 +25,11 @@ research.
 
 ## Installation
 
-You can install the released version of utils.add from
-[CRAN](https://CRAN.R-project.org) with:
+You can install the development version of `utils.add` from
+[GitHub](https://github.com/) with:
 
 ``` r
-# Install from CRAN
-install.packages("utils.add")
-```
-
-``` r
-# Or, install the development version from github:
+# install the development version from github:
 devtools::install_github("edwardlavender/utils.add")
 ```
 
@@ -96,3 +91,8 @@ Some functions facilitate data modification. The include:
   - `check_named_list()` – Check that a list is named;
   - `check_length()` – Check that the length of an object is the
     required length;
+
+## Disclaimer
+
+`utils.add` is a new and ‘personal’ package at an early stage of
+evolution. Function names, arguments and availability may change.
