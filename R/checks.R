@@ -44,18 +44,29 @@ check... <- function(not_allowed,...){
 #### check_value()
 
 #' @title Check the input value to a parent function argument
-#' @description Within a function, this function checks the value of an input to an argument of that function. If the input value is supported, the function simply returns this value. If the input is not supported, the function returns a warning and the default value. This function is designed to be implemented internally within functions and not intended for general use.
+#' @description Within a function, this function checks the value of an input to an argument of that function. If the input value is supported, the function simply returns this value. If the input is not supported, the function either throws an error or returns a warning and the default value.
 #'
 #' @param arg A character string which defines the argument of the parent function.
 #' @param input The input to an argument of a parent function.
 #' @param supp A vector of supported input values for the argument in the parent function.
+#' @param warn A logical input which defines whether or not to return a warning and the default value (see \code{default}) or an error.
 #' @param default The default input value for the parent function.
 #'
-#' @return The function returns \code{input} or \code{default} (the latter with a warning) depending on whether or not \code{input} is within \code{supp} (i.e., whether or not the input to the argument of a parent function is supported).
+#' @return The function returns \code{input}, an error or a warning and \code{default} depending on whether or not \code{input} is within \code{supp} (i.e., whether or not the input to the argument of a parent function is supported).
 #'
 #' @examples
 #'
-#' #### Define an example function:
+#' #### Simple examples outside of parent functions
+#' # Scenario: input to test is supported:
+#' check_value(arg = "test", input = 1, supp = 1:2, warn = TRUE)
+#' # Scenario: input to test is not supported, so return a warning and the default value
+#' check_value(arg = "test", input = 1, supp = 2, warn = TRUE)
+#' # Scenario: input to test is not supported:
+#' \dontrun{
+#' check_value(arg = "test", input = 1, supp = 2, warn = FALSE)
+#' }
+#'
+#' #### Examples inside a parent function
 #' # The function returns 1 or 2, depending on the input to 'output'
 #' return_1_or_2 <- function(output = 1){
 #'   # Check the output, changing the output to the default if necessary
@@ -63,11 +74,9 @@ check... <- function(not_allowed,...){
 #'   # Return a value according to 'output'
 #'   if(output == 1) return(1) else if(output == 2) return(2)
 #' }
-#'
-#' #### Example (1): If a supported input to output is provided, everything works perfectly:
+#' # Scenario: If a supported input to output is provided, everything works perfectly:
 #' return_1_or_2(1); return_1_or_2(2)
-#'
-#' #### Example (2): # If an unsupported input to output is provided,
+#' # Scenario: If an unsupported input to output is provided,
 #' # ... the default output is used with a warning:
 #' \dontrun{
 #' return_1_or_2(3)
@@ -77,18 +86,24 @@ check... <- function(not_allowed,...){
 #' @export
 #'
 
-check_value <- function(arg = deparse(substitute(input)), input, supp, default = supp[1]){
+check_value <- function(arg = deparse(substitute(input)), input, supp, warn = TRUE, default = supp[1]){
   # If the input is not in a vector of supported arguments...
   if(!(input %in% supp)){
-    # Provide a warning and revert to the default
+    ## Provide a warning and revert to the default
     if(is.character(input)) input <- paste0("',", input, "'")
-    if(is.character(default)) default <- paste0("'", default, "'")
-    warning(paste0("Argument '", arg, "' = ", input, " is not supported; defaulting to ", arg, " = ", default, ".\n"))
-    input <- default
+    if(warn){
+      if(is.character(default)) default <- paste0("'", default, "'")
+      warning(paste0("Argument '", arg, "' = ", input, " is not supported; defaulting to ", arg, " = ", default, ".\n"))
+      input <- default
+    } else{
+      if(is.character(supp)) supp <- paste0("'", supp, "'")
+      stop(paste0("Argument '", arg, "' = ", input, " is not supported. Supported option(s): ", paste0(supp, collapse = ", "), "."))
+    }
   }
   # Return input
   return(input)
 }
+
 
 
 ###################################
@@ -334,13 +349,16 @@ check_length <- function(arg = deparse(substitute(input)),
 #### check_dir()
 
 #' @title Check a directory exists
-#' @description This function checks whether a directory exists and, if not, returns an informative error message.
+#' @description This function checks whether a directory exists and, if not, returns an informative error message. The inputted directory can be edited with the addition of a '/' if requested.
 #' @param arg (optional) A character string which defines the argument of a parent function.
 #' @param input A character string which defines a directory.
-#' @return The function checks whether or not a directory exists and, if not, returns an informative error message.
+#' @param check_slash A logical input that defines whether or not to check the end of a string for '/'. If \code{TRUE} and a '/' is lacking, this is added to the returned directory.
+#' @return The function checks whether or not a directory exists. If so, the function returns either the directory as inputted, or the directory with a '/' added to the end. If not, the function returns an informative error message.
 #' @examples
+#' check_dir(arg = "This should work.", input = tempdir())
+#' check_dir(arg = "Check the slash.", input = tempdir(), check_slash = TRUE)
 #' \dontrun{
-#' check_dir(arg = "silly",
+#' check_dir(arg = "This is silly.",
 #'           input = ".~/this_is_a_silly_directory/")
 #' }
 #' @author Edward Lavender
@@ -348,10 +366,26 @@ check_length <- function(arg = deparse(substitute(input)),
 #'
 
 check_dir <- function(arg = deparse(substitute(input)),
-                      input){
+                      input,
+                      check_slash = FALSE){
+
+  #### Check the directory exists
   if(!dir.exists(input)){
     stop(paste0("The directory inputted to the argument '", arg, "' ('", input, "') does not exist."), call. = FALSE)
   }
+
+  #### Check the directory ends in a /
+  if(check_slash){
+    end_is_slash <- substr(input, nchar(input), nchar(input)) == "/"
+    if(!end_is_slash){
+
+      message(paste0("'/' added to the directory inputted to the argument '", arg, "' ('", input, "')."))
+      input <- paste0(input, "/")
+    }
+  }
+
+  #### Return input, possibly updated with / if checks passed
+  return(input)
 }
 
 
