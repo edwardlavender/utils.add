@@ -4,7 +4,13 @@
 \alias{check_value}
 \title{Check the input value to a parent function argument}
 \usage{
-check_value(arg = deparse(substitute(input)), input, supp, default = supp[1])
+check_value(
+  arg = deparse(substitute(input)),
+  input,
+  supp,
+  warn = TRUE,
+  default = supp[1]
+)
 }
 \arguments{
 \item{arg}{A character string which defines the argument of the parent function.}
@@ -13,17 +19,29 @@ check_value(arg = deparse(substitute(input)), input, supp, default = supp[1])
 
 \item{supp}{A vector of supported input values for the argument in the parent function.}
 
+\item{warn}{A logical input which defines whether or not to return a warning and the default value (see \code{default}) or an error.}
+
 \item{default}{The default input value for the parent function.}
 }
 \value{
-The function returns \code{input} or \code{default} (the latter with a warning) depending on whether or not \code{input} is within \code{supp} (i.e., whether or not the input to the argument of a parent function is supported).
+The function returns \code{input}, an error or a warning and \code{default} depending on whether or not \code{input} is within \code{supp} (i.e., whether or not the input to the argument of a parent function is supported).
 }
 \description{
-Within a function, this function checks the value of an input to an argument of that function. If the input value is supported, the function simply returns this value. If the input is not supported, the function returns a warning and the default value. This function is designed to be implemented internally within functions and not intended for general use.
+Within a function, this function checks the value of an input to an argument of that function. If the input value is supported, the function simply returns this value. If the input is not supported, the function either throws an error or returns a warning and the default value.
 }
 \examples{
 
-#### Define an example function:
+#### Simple examples outside of parent functions
+# Scenario: input to test is supported:
+check_value(arg = "test", input = 1, supp = 1:2, warn = TRUE)
+# Scenario: input to test is not supported, so return a warning and the default value
+check_value(arg = "test", input = 1, supp = 2, warn = TRUE)
+# Scenario: input to test is not supported:
+\dontrun{
+check_value(arg = "test", input = 1, supp = 2, warn = FALSE)
+}
+
+#### Examples inside a parent function
 # The function returns 1 or 2, depending on the input to 'output'
 return_1_or_2 <- function(output = 1){
   # Check the output, changing the output to the default if necessary
@@ -31,11 +49,9 @@ return_1_or_2 <- function(output = 1){
   # Return a value according to 'output'
   if(output == 1) return(1) else if(output == 2) return(2)
 }
-
-#### Example (1): If a supported input to output is provided, everything works perfectly:
+# Scenario: If a supported input to output is provided, everything works perfectly:
 return_1_or_2(1); return_1_or_2(2)
-
-#### Example (2): # If an unsupported input to output is provided,
+# Scenario: If an unsupported input to output is provided,
 # ... the default output is used with a warning:
 \dontrun{
 return_1_or_2(3)
