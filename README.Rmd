@@ -59,9 +59,9 @@ Some functions which facilitate learning from data. These include:
 
 Some functions facilitate data modification. The include: 
 
-  * `add_list_null()` -- add `list(NULL)` to a list in replacement of `NULL` elements;
-  * `list_merge()` -- merge lists, accounting for empty lists;
-  * `tidy_coef()` -- tidy a table of coefficients;
+  * `add_list_null()` -- Add `list(NULL)` to a list in replacement of `NULL` elements;
+  * `list_merge()` -- Merge lists, accounting for empty lists;
+  * `tidy_coef()` -- Tidy a table of coefficients;
 
 ## Common mathematical functions
 
