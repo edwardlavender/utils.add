@@ -7,7 +7,8 @@
 tidy_coef(
   coef,
   coef_names = rownames(coef),
-  col_names = c("Coefficient", "Estimate", "SE", "z-value", "p-value"),
+  col_names = c("Coefficient", "Estimate", "SE", "z-value", "p-value")[1:(ncol(coef) +
+    1)],
   f = function(x) round(x, digits = 3),
   f_index = 1:ncol(coef),
   file = NULL,
