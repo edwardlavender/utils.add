@@ -9,7 +9,7 @@ Imports:
     plyr, dplyr, tidyr, lubridate, 
     stringi, rlist, plotrix,
 Suggests:
-    mgcv 
+    mgcv, rstudioapi
 License: GPL-3
 URL: http://github.com/edwardlavender/utils.add
 BugReports: http://github.com/edwardlavender/utils.add/issues

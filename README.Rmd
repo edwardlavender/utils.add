@@ -62,6 +62,7 @@ Some functions facilitate data modification. The include:
   * `add_list_null()` -- Add `list(NULL)` to a list in replacement of `NULL` elements;
   * `list_merge()` -- Merge lists, accounting for empty lists;
   * `tidy_coef()` -- Tidy a table of coefficients;
+  * `add_standard_attr()` -- Add standard attributions (such as the source file and the date) to an object;
 
 ## Common mathematical functions
 
