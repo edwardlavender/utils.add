@@ -5,9 +5,9 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
-`utils.add` is an R package designed to facilitate an eclectic and
-evolving set of R operations commonly implemented by the author in the
-course of scientific research and/or other R packages. These functions
+`utils.add` is an `R` package designed to facilitate an eclectic and
+evolving set of `R` operations commonly implemented by the author in the
+course of scientific research and/or other `R` packages. These functions
 generally fall into one of the following themes:
 
   - Extract data
@@ -17,7 +17,7 @@ generally fall into one of the following themes:
   - Development tools
 
 It is important to emphasise that `utils.add` is not a comprehensive
-package designed to deliver any one of these themes: many R packages
+package designed to deliver any one of these themes: many `R` packages
 already fill this space. `utils.add` simply makes a few eclectic
 operations that can be loosely grouped into these themes a bit easier in
 cases where this has proven useful in the course of the author’s
@@ -42,7 +42,7 @@ Some functions facilitate data extraction. These include:
   - `pos_first_unique()` – Extract the first position of each unique
     element in a vector;
   - `left()` and `right()` – Explore the left and right hand side of a
-    dataframe of matrix respectively;
+    dataframe or matrix respectively;
   - `around()` – Extract the rows in a dataframe around specified
     position(s);
   - `sterm()` – Define `mgcv` model smooth term names (e.g. to extract
@@ -60,6 +60,8 @@ Some functions which facilitate learning from data. These include:
   - `round_range()` – Round a range down and up at lower/upper limits
     respectively;
   - `clip_within_range()` – Clip a vector to lie within a range;
+  - `find_quantile_bin()`– Find the quantile bin in which an observation
+    belongs;
 
 ## Modify data
 
@@ -69,8 +71,8 @@ Some functions facilitate data modification. The include:
     `NULL` elements;
   - `list_merge()` – Merge lists, accounting for empty lists;
   - `tidy_coef()` – Tidy a table of coefficients;
-  - `add_standard_attr()` – Add standard attributions (such as the
-    source file and the date) to an object;
+  - `add_standard_attr()` – Add standard attributes (such as the source
+    file and the date) to an object;
 
 ## Common mathematical functions
 
