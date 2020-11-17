@@ -7,8 +7,8 @@
 basic_stats(
   x,
   f = list(mean = mean, min = min, max = max, sd = stats::sd, IQR = stats::IQR),
-  p = function(x) {     round(x, digits = 2) },
-  output = "ldf",
+  p = function(x) round(x, digits = 2),
+  output = "wdf",
   ...
 )
 }
@@ -17,9 +17,9 @@ basic_stats(
 
 \item{f}{A named list of functions which are used to calculate statistics.}
 
-\item{p}{A function for processing summary statistics. The default is a function which rounds each output to the nearest two decimal places.}
+\item{p}{A function for processing summary statistics. The default is a function which rounds each output to the nearest two decimal places. \code{p = NULL} leaves summary statistics unchanged.}
 
-\item{output}{A character specifying the format in which summary statistics should be returned. The currently implemented options are: (1) \code{"vec"} a numeric vector; (2) \code{"ldf"} a long-format dataframe in long format; and (3) \code{"wdf"}, a wide-format dataframe.}
+\item{output}{A character specifying the format in which summary statistics should be returned. The currently implemented options are: (1) \code{"vec"} a numeric vector; (2) \code{"ldf"} a long-format dataframe in long format; and (3) \code{"wdf"}, a wide-format dataframe. The default option is \code{"wdf"}.}
 
 \item{...}{Other arguments that apply to all functions in \code{f}, such as \code{na.rm = TRUE}.}
 }

@@ -4,7 +4,7 @@
 #' @param x A numeric vector for which to calculate statistics.
 #' @param f A named list of functions which are used to calculate statistics.
 #' @param p A function for processing summary statistics. The default is a function which rounds each output to the nearest two decimal places. \code{p = NULL} leaves summary statistics unchanged.
-#' @param output A character specifying the format in which summary statistics should be returned. The currently implemented options are: (1) \code{"vec"} a numeric vector; (2) \code{"ldf"} a long-format dataframe in long format; and (3) \code{"wdf"}, a wide-format dataframe.
+#' @param output A character specifying the format in which summary statistics should be returned. The currently implemented options are: (1) \code{"vec"} a numeric vector; (2) \code{"ldf"} a long-format dataframe in long format; and (3) \code{"wdf"}, a wide-format dataframe. The default option is \code{"wdf"}.
 #' @param ... Other arguments that apply to all functions in \code{f}, such as \code{na.rm = TRUE}.
 #'
 #' @return Basic statistics for a vector of numbers, either in the format of a numeric vector, a long-format dataframe or a wide-format dataframe depending on the input to \code{output} (see above).
@@ -50,7 +50,7 @@ basic_stats <-
   function(x,
            f = list(mean = mean, min = min, max = max, sd = stats::sd, IQR = stats::IQR),
            p = function(x) round(x, digits = 2) ,
-           output = "ldf",...){
+           output = "wdf",...){
   # Apply each function to create a numeric vector with each summary statistic
   vec <- sapply(f, function(foo){ foo (x,...) })
   # Apply processing function
@@ -62,8 +62,8 @@ basic_stats <-
   wdf <- tidyr::spread(ldf, "statistic", "value")
   # return desired output
   if(!(output %in% c("vec", "ldf", "wdf"))){
-    warning(paste0("output = '", output, "' not supported; defaulting to output = 'ldf'."))
-    output <- "ldf"
+    warning(paste0("output = '", output, "' not supported; defaulting to output = 'wdf'."))
+    output <- "wdf"
   }
   return(eval(parse(text = output)))
   }
