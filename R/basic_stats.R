@@ -3,7 +3,7 @@
 #'
 #' @param x A numeric vector for which to calculate statistics.
 #' @param f A named list of functions which are used to calculate statistics.
-#' @param p A function for processing summary statistics. The default is a function which rounds each output to the nearest two decimal places.
+#' @param p A function for processing summary statistics. The default is a function which rounds each output to the nearest two decimal places. \code{p = NULL} leaves summary statistics unchanged.
 #' @param output A character specifying the format in which summary statistics should be returned. The currently implemented options are: (1) \code{"vec"} a numeric vector; (2) \code{"ldf"} a long-format dataframe in long format; and (3) \code{"wdf"}, a wide-format dataframe.
 #' @param ... Other arguments that apply to all functions in \code{f}, such as \code{na.rm = TRUE}.
 #'
@@ -49,12 +49,12 @@
 basic_stats <-
   function(x,
            f = list(mean = mean, min = min, max = max, sd = stats::sd, IQR = stats::IQR),
-           p = function(x){ round(x, digits = 2) },
+           p = function(x) round(x, digits = 2) ,
            output = "ldf",...){
   # Apply each function to create a numeric vector with each summary statistic
   vec <- sapply(f, function(foo){ foo (x,...) })
   # Apply processing function
-  vec <- p(vec)
+  if(!is.null(p)) vec <- p(vec)
   # long-format dataframe
   ldf <- data.frame(value = vec)
   ldf$statistic <- rownames(ldf)
