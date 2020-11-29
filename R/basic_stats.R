@@ -48,18 +48,30 @@
 
 basic_stats <-
   function(x,
-           f = list(mean = mean, min = min, max = max, sd = stats::sd, IQR = stats::IQR),
+           f = list(min = min,
+                    mean = mean,
+                    median = stats::median,
+                    max = max,
+                    sd = stats::sd,
+                    IQR = stats::IQR,
+                    MAD = stats::mad),
            p = function(x) round(x, digits = 2) ,
            output = "wdf",...){
+  # Check f is named list
+  check_named_list(input = f,
+                   ignore_empty = FALSE)
   # Apply each function to create a numeric vector with each summary statistic
   vec <- sapply(f, function(foo){ foo (x,...) })
   # Apply processing function
   if(!is.null(p)) vec <- p(vec)
   # long-format dataframe
   ldf <- data.frame(value = vec)
-  ldf$statistic <- rownames(ldf)
+  ldf$statistic <- factor(names(f), levels = names(f))
+  rownames(ldf) <- 1:nrow(ldf)
   # wide-format dataframe
   wdf <- tidyr::spread(ldf, "statistic", "value")
+  wdf <- wdf[, names(f)]
+  rownames(wdf) <- 1:nrow(wdf)
   # return desired output
   if(!(output %in% c("vec", "ldf", "wdf"))){
     warning(paste0("output = '", output, "' not supported; defaulting to output = 'wdf'."))

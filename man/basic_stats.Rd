@@ -6,7 +6,8 @@
 \usage{
 basic_stats(
   x,
-  f = list(mean = mean, min = min, max = max, sd = stats::sd, IQR = stats::IQR),
+  f = list(min = min, mean = mean, median = stats::median, max = max, sd = stats::sd,
+    IQR = stats::IQR, MAD = stats::mad),
   p = function(x) round(x, digits = 2),
   output = "wdf",
   ...
