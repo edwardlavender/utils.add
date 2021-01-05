@@ -62,6 +62,7 @@ Some functions which facilitate learning from data. These include:
   - `clip_within_range()` – Clip a vector to lie within a range;
   - `find_quantile_bin()`– Find the quantile bin in which an observation
     belongs;
+  - `summarise_along_walk()` – Summarise every *n* numbers in a vector;
   - `est_prop()` – Estimate proportions ± standard errors;
   - `dev_expl()` – Calculate the % deviance explained by a model;
 
