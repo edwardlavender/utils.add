@@ -295,7 +295,7 @@ check_tz <-
 
 check_named_list <- function(arg = deparse(substitute(input)), input, ignore_empty = TRUE){
   if(!any("list" %in% class(input))) stop(paste0("Argument '", arg, "' must be of class list."))
-  if(plotrix::listDepth(input) > 1){
+  if(list_depth(input) > 1){
     warning("Input list of check_named_list() is of depth > 1; only the top level is checked.")
   }
   list_is_empty <- (length(input) == 0)
