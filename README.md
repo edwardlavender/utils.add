@@ -87,6 +87,8 @@ Some functions facilitate data modification. The include:
 
 ## Development tools
 
+  - `load_internal_functions()` – Load internal functions from a package
+    into the global environment;
   - `check...()` – Check arguments supplied via `...` within a function;
   - `check_value()` – Check that the value of an input supplied to a
     parent function is appropriate;
