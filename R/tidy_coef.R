@@ -3,7 +3,7 @@
 #' @param coef A matrix of model coefficients, usually from \code{\link[stats]{coef}}. The matrix is expected to have row names (coefficient names) and numeric coefficients.
 #' @param coef_names (optional) A character vector of 'tidy' coefficient names.
 #' @param col_names (optional) A character vector of 'tidy' column names. The first column name should be the name of the column containing the coefficient names.
-#' @param f (optional) A function to be applied to specified columns to tidy numeric outputs. The default is \code{function(x) round(x, digits = 3)}.
+#' @param f (optional) A function to be applied to specified columns to tidy numeric outputs.
 #' @param f_index An integer vector of the indices of the columns in \code{coef} to which the function \code{f} is applied. By default, if \code{f} is supplied, it is applied to all columns.
 #' @param file (optional) A character which defines the name of the file to be saved. This is passed to \code{\link[utils]{write.table}}.
 #' @param quote A logical value which defines whether or not to surround character or factor columns with quotes. This is passed to \code{\link[utils]{write.table}}.
@@ -24,7 +24,7 @@
 tidy_coef <- function(coef,
                       coef_names = rownames(coef),
                       col_names = c("Coefficient", "Estimate", "SE", "z-value", "p-value")[1:(ncol(coef)+1)],
-                      f = function(x) round(x, digits = 3),
+                      f = function(x) prettyGraphics::add_lagging_point_zero(round(x, digits = 3), n = 3),
                       f_index = 1:ncol(coef),
                       file = NULL,
                       quote = FALSE,
@@ -36,7 +36,7 @@ tidy_coef <- function(coef,
   coefp <- coef
   if(!is.null(f)){
     for(j in f_index){
-      coefp[, j] <- f(coefp[, j])
+      coefp[, j] <- f(as.numeric(coefp[, j]))
     }
   }
 

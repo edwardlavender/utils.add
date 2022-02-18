@@ -9,7 +9,7 @@ tidy_coef(
   coef_names = rownames(coef),
   col_names = c("Coefficient", "Estimate", "SE", "z-value", "p-value")[1:(ncol(coef) +
     1)],
-  f = function(x) round(x, digits = 3),
+  f = function(x) prettyGraphics::add_lagging_point_zero(round(x, digits = 3), n = 3),
   f_index = 1:ncol(coef),
   file = NULL,
   quote = FALSE,
@@ -25,7 +25,7 @@ tidy_coef(
 
 \item{col_names}{(optional) A character vector of 'tidy' column names. The first column name should be the name of the column containing the coefficient names.}
 
-\item{f}{(optional) A function to be applied to specified columns to tidy numeric outputs. The default is \code{function(x) round(x, digits = 3)}.}
+\item{f}{(optional) A function to be applied to specified columns to tidy numeric outputs.}
 
 \item{f_index}{An integer vector of the indices of the columns in \code{coef} to which the function \code{f} is applied. By default, if \code{f} is supplied, it is applied to all columns.}
 
