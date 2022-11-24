@@ -1,20 +1,21 @@
 
 # utils.add
 
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Project Status: Inactive – The project has reached a stable, usable
+state but is no longer being actively developed; support/maintenance
+will be provided as time
+allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 
 `utils.add` is an `R` package designed to facilitate an eclectic and
 evolving set of `R` operations commonly implemented by the author in the
 course of scientific research and/or other `R` packages. These functions
 generally fall into one of the following themes:
 
-  - Extract data
-  - Learn from data
-  - Modify data
-  - Common mathematical operations
-  - Development tools
+- Extract data
+- Learn from data
+- Modify data
+- Common mathematical operations
+- Development tools
 
 It is important to emphasise that `utils.add` is not a comprehensive
 package designed to deliver any one of these themes: many `R` packages
@@ -37,70 +38,70 @@ devtools::install_github("edwardlavender/utils.add")
 
 Some functions facilitate data extraction. These include:
 
-  - `isnt_na()` – Extract observations which are not NA;
-  - `substr_end()` – Extract the last n letters from a character;
-  - `pos_first_unique()` – Extract the first position of each unique
-    element in a vector;
-  - `left()` and `right()` – Explore the left and right hand side of a
-    dataframe or matrix respectively;
-  - `around()` – Extract the rows in a dataframe around specified
-    position(s);
-  - `sterm()` – Define `mgcv` model smooth term names (e.g. to extract
-    values from `mgcv::predict.gam()`);
+- `isnt_na()` – Extract observations which are not NA;
+- `substr_end()` – Extract the last n letters from a character;
+- `pos_first_unique()` – Extract the first position of each unique
+  element in a vector;
+- `left()` and `right()` – Explore the left and right hand side of a
+  dataframe or matrix respectively;
+- `around()` – Extract the rows in a dataframe around specified
+  position(s);
+- `sterm()` – Define `mgcv` model smooth term names (e.g. to extract
+  values from `mgcv::predict.gam()`);
 
 ## Learn from data
 
 Some functions which facilitate learning from data. These include:
 
-  - `count_if()` – Count the number of observations which meet a
-    specified condition;
-  - `basic_stats()` – Compute basic statistics (e.g. `mean`, `mode`,
-    etc.) for a sample;
-  - `seq_range()` – Generate a sequence between two values;
-  - `round_range()` – Round a range down and up at lower/upper limits
-    respectively;
-  - `clip_within_range()` – Clip a vector to lie within a range;
-  - `find_quantile_bin()`– Find the quantile bin in which an observation
-    belongs;
-  - `summarise_along_walk()` – Summarise every *n* numbers in a vector;
-  - `est_prop()` – Estimate proportions ± standard errors;
-  - `dev_expl()` – Calculate the % deviance explained by a model;
+- `count_if()` – Count the number of observations which meet a specified
+  condition;
+- `basic_stats()` – Compute basic statistics (e.g. `mean`, `mode`, etc.)
+  for a sample;
+- `seq_range()` – Generate a sequence between two values;
+- `round_range()` – Round a range down and up at lower/upper limits
+  respectively;
+- `clip_within_range()` – Clip a vector to lie within a range;
+- `find_quantile_bin()`– Find the quantile bin in which an observation
+  belongs;
+- `summarise_along_walk()` – Summarise every *n* numbers in a vector;
+- `est_prop()` – Estimate proportions ± standard errors;
+- `dev_expl()` – Calculate the % deviance explained by a model;
 
 ## Modify data
 
 Some functions facilitate data modification. The include:
 
-  - `add_list_null()` – Add `list(NULL)` to a list in replacement of
-    `NULL` elements;
-  - `list_merge()` – Merge lists, accounting for empty lists;
-  - `tidy_coef()` – Tidy a table of coefficients;
-  - `add_standard_attr()` – Add standard attributes (such as the source
-    file and the date) to an object;
+- `add_list_null()` – Add `list(NULL)` to a list in replacement of
+  `NULL` elements;
+- `list_merge()` – Merge lists, accounting for empty lists;
+- `tidy_coef()` – Tidy a table of coefficients;
+- `add_standard_attr()` – Add standard attributes (such as the source
+  file and the date) to an object;
 
 ## Common mathematical functions
 
-  - `linear()` – A linear function based on parameters `a` and `b`;
-  - `quadratic()` – A quadratic function based on parameters `a`, `b`,
-    `h` and `k`;
-  - `sigmoid()` – A (centred) sigmoidal function based on parameters
-    `x0`, `L` and `k`;
+- `linear()` – A linear function based on parameters `a` and `b`;
+- `quadratic()` – A quadratic function based on parameters `a`, `b`, `h`
+  and `k`;
+- `sigmoid()` – A (centred) sigmoidal function based on parameters `x0`,
+  `L` and `k`;
 
 ## Development tools
 
-  - `load_internal_functions()` – Load internal functions from a package
-    into the global environment;
-  - `check...()` – Check arguments supplied via `...` within a function;
-  - `check_value()` – Check that the value of an input supplied to a
-    parent function is appropriate;
-  - `check_class()` – Check that the class of an inputted object
-    supplied to a parent function is appropriate;
-  - `check_tz()` – Check the time zone of an object and, if appropriate
-    and necessary, force UTC;
-  - `check_names()` – Check that required names are contained within an
-    object;
-  - `check_named_list()` – Check that a list is named;
-  - `check_length()` – Check that the length of an object is the
-    required length;
+- `load_internal_functions()` – Load internal functions from a package
+  into the global environment;
+- `check...()` – Check arguments supplied via `...` within a function;
+- `check_value()` – Check that the value of an input supplied to a
+  parent function is appropriate;
+- `check_class()` – Check that the class of an inputted object supplied
+  to a parent function is appropriate;
+- `check_tz()` – Check the time zone of an object and, if appropriate
+  and necessary, force UTC;
+- `check_names()` – Check that required names are contained within an
+  object;
+- `check_named_list()` – Check that a list is named;
+- `check_length()` – Check that the length of an object is the required
+  length;
 
 ## Disclaimer
 
