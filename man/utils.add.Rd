@@ -2,10 +2,19 @@
 % Please edit documentation in R/utils.add-package.R
 \docType{package}
 \name{utils.add}
+\alias{utils.add-package}
 \alias{utils.add}
 \title{Additional Utilities for Base R}
 \description{
 utils.add provides functions for an eclectic and evolving collection of R operations implemented by the author in the course of scientific research. This includes functions which facilitate data extraction, learning from data, data modification, common mathematical functions and development tools.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/edwardlavender/utils.add/}
+  \item Report bugs at \url{https://github.com/edwardlavender/utils.add/issues/}
+}
+
 }
 \author{
 Edward Lavender

@@ -7,12 +7,12 @@ Maintainer: Edward Lavender <el72@st-andrews.ac.uk>
 Description: An eclectic and evolving collection of R functions implemented by the author in the course of scientific research.
 Imports:
     plyr, dplyr, tidyr, lubridate, 
-    stringi, rlist, prettyGraphics
+    stringi, rlist
 Suggests:
-    mgcv, rstudioapi, pacman
+    mgcv, rstudioapi, pacman, prettyGraphics
 License: GPL-3
 URL: https://github.com/edwardlavender/utils.add/
 BugReports: https://github.com/edwardlavender/utils.add/issues/
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2
